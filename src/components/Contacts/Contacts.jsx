@@ -1,47 +1,53 @@
-import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { Container } from "@mui/material";
-import ContactList from "components/ContactList";
-import Filter from "components/Filter";
-import ContactForm from "../ContactForm";
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { Container, Box } from '@mui/material';
+import ContactList from 'components/ContactList';
+import Filter from 'components/Filter';
+import ContactForm from '../ContactForm';
+import contactsOperations from '../../redux/contacts/contacts-operations';
 import {
-  fetchContacts,
-  deleteContact,
-  addContact,
-} from "../../redux/operations";
-import { setContacts, setStatusFilter } from "../../redux/contacts-slice";
+  setContacts,
+  setStatusFilter,
+} from '../../redux/contacts/contacts-slice';
+import styles from './Contacts.module.css';
 
 const Contacts = () => {
+  const { fetchContacts, deleteContact, addContact } = contactsOperations;
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchContacts());
-  }, [dispatch]);
+  }, [dispatch, fetchContacts]);
 
-  const { contacts, filter } = useSelector((state) => ({
+  const { contacts, filter, isLoggedIn } = useSelector(state => ({
     contacts: state.contacts.contacts.items,
     filter: state.contacts.filter,
+    isLoggedIn: state.auth.isLoggedIn,
   }));
 
-  const handleNewContact = (newContact) => {
+  const handleNewContact = newContact => {
     dispatch(addContact(newContact));
   };
 
-  const handleFilter = (event) => {
+  const handleFilter = event => {
     const filterValue = event.target.value;
 
     dispatch(setStatusFilter(filterValue));
   };
 
-  const handleDelete = (id) => {
+  const handleDelete = id => {
     dispatch(deleteContact(id));
 
-    const updatedContacts = contacts.filter((contact) => contact.id !== id);
+    const updatedContacts = contacts.filter(contact => contact.id !== id);
     dispatch(setContacts(updatedContacts));
   };
 
-  const filteredContacts = contacts?.filter((contact) =>
+  const filteredContacts = contacts?.filter(contact =>
     contact?.name?.toLowerCase().includes(filter.toLowerCase())
   );
+
+  if (!isLoggedIn) {
+    return <Box className={styles.loginMassege}>Please Log In</Box>;
+  }
 
   return (
     <Container>

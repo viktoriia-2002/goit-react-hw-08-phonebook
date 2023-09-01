@@ -1,20 +1,19 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
-import "react-toastify/dist/ReactToastify.css";
-import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 
-import { ToastContainer } from "react-toastify";
-import { nanoid } from "nanoid";
+import { ToastContainer } from 'react-toastify';
 
 const ContactForm = ({ contacts, handleNewContact }) => {
-  const [name, setName] = useState("");
-  const [number, setNumber] = useState("");
+  const [name, setName] = useState('');
+  const [number, setNumber] = useState('');
 
-  const handleSubmit = (event) => {
+  const handleSubmit = event => {
     event.preventDefault();
 
     const duplicateName = contacts.some(
-      (contact) => contact.name.toLowerCase() === name.toLowerCase()
+      contact => contact.name.toLowerCase() === name.toLowerCase()
     );
 
     if (duplicateName) {
@@ -23,22 +22,21 @@ const ContactForm = ({ contacts, handleNewContact }) => {
     }
 
     const newContact = {
-      id: nanoid(),
       name: name,
       number: number,
     };
 
     handleNewContact(newContact);
 
-    setName("");
-    setNumber("");
+    setName('');
+    setNumber('');
   };
 
-  const handleNameChange = (event) => {
+  const handleNameChange = event => {
     setName(event.target.value);
   };
 
-  const handleTelChange = (event) => {
+  const handleTelChange = event => {
     setNumber(event.target.value);
   };
 

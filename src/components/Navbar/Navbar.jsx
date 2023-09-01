@@ -1,49 +1,128 @@
-import * as React from "react";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
+// import * as React from "react";
+// import AppBar from "@mui/material/AppBar";
+// import Box from "@mui/material/Box";
+// import Toolbar from "@mui/material/Toolbar";
+// import IconButton from "@mui/material/IconButton";
 
-import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
-import { authSelectors } from "../../redux/auth";
-import { Link } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import styles from "./Navbar.module.css";
-import operations from "../../redux/auth/auth-operations";
+// import Container from "@mui/material/Container";
+// import Avatar from "@mui/material/Avatar";
+// import Button from "@mui/material/Button";
+// import Tooltip from "@mui/material/Tooltip";
+// import { authSelectors } from "../../redux/auth";
+// import { Link } from "react-router-dom";
+// import { useSelector, useDispatch } from "react-redux";
+// import styles from "./Navbar.module.css";
+// import operations from "../../redux/auth/auth-operations";
 
-const pages = (isLoggedIn) =>
+// const pages = (isLoggedIn) =>
+//   [
+//     { page: "Home", path: "/" },
+//     { page: "Contacts", path: "/contacts" },
+//     isLoggedIn ? null : { page: "Register", path: "/register" },
+//     isLoggedIn ? null : { page: "Log in", path: "/login" },
+//   ].filter(Boolean);
+
+// function ResponsiveAppBar() {
+//   const [anchorElNav, setAnchorElNav] = React.useState(null);
+//   const [anchorElUser, setAnchorElUser] = React.useState(null);
+
+//   const dispath = useDispatch();
+
+//   const isLoggedIn = useSelector(authSelectors.getIsLoggedIn);
+
+//   const userName = useSelector(authSelectors.getUsername);
+
+//   const handleLogOut = () => {
+//     dispath(operations.logOut());
+//   };
+
+//   const handleOpenNavMenu = (event) => {
+//     setAnchorElNav(event.currentTarget);
+//   };
+//   const handleOpenUserMenu = (event) => {
+//     setAnchorElUser(event.currentTarget);
+//   };
+
+//   const handleCloseNavMenu = () => {
+//     setAnchorElNav(null);
+//   };
+
+//   const handleCloseUserMenu = () => {
+//     setAnchorElUser(null);
+//   };
+
+//   return (
+//     <AppBar position="static">
+//       <Container maxWidth="xl">
+//         <Toolbar disableGutters>
+//           <Box sx={{ flexGrow: 1, display: { md: "flex" } }}>
+//             <Tooltip title="Open settings">
+//               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+//                 <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+//               </IconButton>
+//             </Tooltip>
+//             {pages(isLoggedIn).map(({ page, path }) => (
+//               <Link
+//                 to={path}
+//                 style={{ textDecoration: "none", color: "inherit" }}
+//                 key={page}
+//               >
+//                 <Button
+//                   key={page}
+//                   onClick={handleCloseNavMenu}
+//                   sx={{ my: 2, color: "white", display: "block" }}
+//                 >
+//                   {page}
+//                 </Button>
+//               </Link>
+//             ))}
+//             <Box className={styles.userName}>{userName}</Box>
+//           </Box>
+//           {isLoggedIn && (
+//             <Button onClick={handleLogOut} variant="outlined" color="error">
+//               Log out
+//             </Button>
+//           )}
+//         </Toolbar>
+//       </Container>
+//     </AppBar>
+//   );
+// }
+// export default ResponsiveAppBar;
+
+import * as React from 'react';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import Menu from '@mui/material/Menu';
+import MenuIcon from '@mui/icons-material/Menu';
+import Container from '@mui/material/Container';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import MenuItem from '@mui/material/MenuItem';
+import { useSelector, useDispatch } from 'react-redux';
+import authOperations from '../../redux/auth/auth-operations';
+import { authSelectors } from '../../redux/auth';
+import { Link } from 'react-router-dom';
+
+const pages = isLoggedIn =>
   [
-    { page: "Home", path: "/" },
-    { page: "Contacts", path: "/contacts" },
-    isLoggedIn ? null : { page: "Register", path: "/register" },
-    isLoggedIn ? null : { page: "Log in", path: "/login" },
+    { page: 'Home', path: '/' },
+    { page: 'Contacts', path: '/contacts' },
+    isLoggedIn ? null : { page: 'Register', path: '/register' },
+    isLoggedIn ? null : { page: 'Log in', path: '/login' },
   ].filter(Boolean);
 
-function ResponsiveAppBar() {
+const ResponsiveAppBar = () => {
+  const dispath = useDispatch();
+  const isLoggedIn = useSelector(authSelectors.getIsLoggedIn);
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
-  const dispath = useDispatch();
-
-  const isLoggedIn = useSelector(authSelectors.getIsLoggedIn);
-
-  const userName = useSelector(authSelectors.getUsername);
-
-  console.log({ userName });
-
-  const handleLogOut = () => {
-    // dispath();
-    dispath(operations.logOut());
-  };
-
-  const handleOpenNavMenu = (event) => {
+  const handleOpenNavMenu = event => {
     setAnchorElNav(event.currentTarget);
-  };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
   };
 
   const handleCloseNavMenu = () => {
@@ -54,35 +133,97 @@ function ResponsiveAppBar() {
     setAnchorElUser(null);
   };
 
+  const handleLogOut = () => {
+    dispath(authOperations.logOut());
+  };
+
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <Box sx={{ flexGrow: 1, display: { md: "flex" } }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
+          <Box sx={{ flexGrow: 0 }}>
+            <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+
+            <Menu
+              sx={{ mt: '45px' }}
+              id="menu-appbar"
+              anchorEl={anchorElUser}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              open={Boolean(anchorElUser)}
+              onClose={handleCloseUserMenu}
+            ></Menu>
+          </Box>
+
+          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+            <IconButton
+              size="large"
+              aria-label="account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              onClick={handleOpenNavMenu}
+              color="inherit"
+            >
+              <MenuIcon />
+            </IconButton>
+            <Menu
+              id="menu-appbar"
+              anchorEl={anchorElNav}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'left',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'left',
+              }}
+              open={Boolean(anchorElNav)}
+              onClose={handleCloseNavMenu}
+              sx={{
+                display: { xs: 'block', md: 'none' },
+              }}
+            >
+              {pages(isLoggedIn).map(({ page, path }) => (
+                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                  <Link
+                    to={path}
+                    style={{ textDecoration: 'none', color: 'inherit' }}
+                    key={page}
+                  >
+                    <Typography textAlign="center">{page}</Typography>
+                  </Link>
+                </MenuItem>
+              ))}
+            </Menu>
+          </Box>
+
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages(isLoggedIn).map(({ page, path }) => (
               <Link
                 to={path}
-                style={{ textDecoration: "none", color: "inherit" }}
+                style={{ textDecoration: 'none', color: 'inherit' }}
                 key={page}
               >
                 <Button
                   key={page}
                   onClick={handleCloseNavMenu}
-                  sx={{ my: 2, color: "white", display: "block" }}
+                  sx={{ my: 2, color: 'white', display: 'block' }}
                 >
                   {page}
                 </Button>
               </Link>
             ))}
-            <Box className={styles.userName}>{userName}</Box>
           </Box>
           {isLoggedIn && (
-            <Button onClick={handleLogOut} variant="outlined" color="error">
+            <Button onClick={handleLogOut} variant="contained">
               Log out
             </Button>
           )}
@@ -90,5 +231,5 @@ function ResponsiveAppBar() {
       </Container>
     </AppBar>
   );
-}
+};
 export default ResponsiveAppBar;

@@ -1,17 +1,17 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
 const ContactListItem = ({ person, handleDelete }) => {
   const { id, name, number } = person;
 
   return (
-    <ul>
+    <>
       <li>{name}:</li>
       <li>{number}</li>
       <button type="button" onClick={() => handleDelete(id)}>
         Delete
       </button>
-    </ul>
+    </>
   );
 };
 
