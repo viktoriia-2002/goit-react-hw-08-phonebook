@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Container, Box } from '@mui/material';
+import { Container, Box, Divider } from '@mui/material';
 import ContactList from 'components/ContactList';
 import Filter from 'components/Filter';
 import ContactForm from '../ContactForm';
@@ -49,13 +49,28 @@ const Contacts = () => {
     return <Box className={styles.loginMassege}>Please Log In</Box>;
   }
 
+  const isContacts = contacts.length;
+
   return (
     <Container>
-      <h1>Phonebook</h1>
-      <ContactForm handleNewContact={handleNewContact} contacts={contacts} />
-      <h2>Contacts</h2>
+      <Box style={{ maxWidth: 280, margin: 'auto' }}>
+        <h1>Phonebook</h1>
+        <ContactForm handleNewContact={handleNewContact} contacts={contacts} />
+      </Box>
+      <Divider variant="middle" />
 
-      <Filter onChange={handleFilter} value={filter} />
+      <Box
+        style={{ margin: 'auto', display: 'flex', justifyContent: 'center' }}
+      >
+        <h3>Find contacts by name</h3>
+        <Filter onChange={handleFilter} value={filter} />
+      </Box>
+      <Box
+        style={{ margin: 'auto', display: 'flex', justifyContent: 'center' }}
+      >
+        {isContacts && <h2>Contacts</h2>}
+      </Box>
+
       <ContactList contacts={filteredContacts} handleDelete={handleDelete} />
     </Container>
   );

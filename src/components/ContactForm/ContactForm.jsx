@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import { TextField, Button } from '@mui/material';
 import 'react-toastify/dist/ReactToastify.css';
 import { toast } from 'react-toastify';
 
@@ -41,8 +41,12 @@ const ContactForm = ({ contacts, handleNewContact }) => {
   };
 
   return (
-    <form autoComplete="off" onSubmit={handleSubmit}>
-      <label htmlFor="name">
+    <form
+      autoComplete="off"
+      onSubmit={handleSubmit}
+      style={{ display: 'flex', flexDirection: 'column', marginBottom: 15 }}
+    >
+      {/* <label htmlFor="name">
         Name
         <input
           type="text"
@@ -54,8 +58,19 @@ const ContactForm = ({ contacts, handleNewContact }) => {
           value={name}
           onChange={handleNameChange}
         />
-      </label>
-      <label htmlFor="tel">
+      </label> */}
+      <TextField
+        style={{ marginBottom: 15 }}
+        id="standard-basic"
+        variant="standard"
+        label="Name"
+        pattern="^[a-zA-Zа-яА-Я]+(([' \-][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+        title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+        required
+        value={name}
+        onChange={handleNameChange}
+      />
+      {/* <label htmlFor="tel">
         Number
         <input
           type="tel"
@@ -67,11 +82,22 @@ const ContactForm = ({ contacts, handleNewContact }) => {
           value={number}
           onChange={handleTelChange}
         />
-      </label>
-      <button type="submit">Add contact</button>
+      </label> */}
+      <TextField
+        style={{ marginBottom: 15 }}
+        id="standard-basic"
+        variant="standard"
+        label="Nubmer"
+        pattern="\+?\d{1,4}?[ .\-\s]?\(?\d{1,3}?\)?[ .\-\s]?\d{1,4}[ .\-\s]?\d{1,4}[ .\-\s]?\d{1,9}"
+        title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+        required
+        value={number}
+        onChange={handleTelChange}
+      />
+      <Button type="submit" variant="outlined">
+        Add contact
+      </Button>
       <ToastContainer autoClose={1000} />
-
-      <h3>Find contacts by name</h3>
     </form>
   );
 };
