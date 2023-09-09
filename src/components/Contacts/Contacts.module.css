@@ -1,5 +1,17 @@
 .loginMassege {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.boxPhonebook {
+  max-width: 280px;
+  margin: auto;
+}
+
+.findContacts {
+  margin: auto;
+  margin-top: 36px;
+  display: flex;
+  justify-content: center;
 }
