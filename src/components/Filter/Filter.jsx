@@ -18,11 +18,16 @@
 // }
 
 // export default Filter;
+
 import React from 'react';
 import { TextField } from '@mui/material';
 import styles from './Filter.module.css';
 
 function Filter({ onChange, value }) {
+  const inputStyles = {
+    marginLeft: '20px', // Apply margin-left directly to the input
+  };
+
   return (
     <TextField
       className={styles.filter}
@@ -30,6 +35,9 @@ function Filter({ onChange, value }) {
       type="text"
       onChange={onChange}
       value={value}
+      InputProps={{
+        style: inputStyles, // Apply styles to the input element
+      }}
     />
   );
 }

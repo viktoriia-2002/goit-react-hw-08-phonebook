@@ -147,9 +147,7 @@ const Contacts = () => {
         <h3>Find contacts by name</h3>
         <Filter onChange={handleFilter} value={filter} />
       </Box>
-      <Box
-        style={{ margin: 'auto', display: 'flex', justifyContent: 'center' }}
-      >
+      <Box className={styles.findContactsBox}>
         {isContacts && <h2>Contacts</h2>}
       </Box>
 
